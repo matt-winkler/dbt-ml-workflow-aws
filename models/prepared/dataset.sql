@@ -71,7 +71,6 @@ joined as (
 
            cl.fraud
 
-
     from  claims cl
     join customers cst
       on cl.policy_id = cst.policy_id
