@@ -76,4 +76,4 @@ joined as (
       on cl.policy_id = cst.policy_id
 )
 
-select count(*) from joined
+select * from joined
