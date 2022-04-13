@@ -10,7 +10,7 @@
             'auto_ml': 'OFF',
             'model_type': 'XGBOOST',
             'problem_type': 'binary_classification',
-            'objective': 'binary:logistic',
+            'objective': 'binary:hinge',
             'preprocessors': 'none',
             'hyperparameters': 'default'
         }

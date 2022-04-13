@@ -4,7 +4,6 @@
 
 {% macro redshift__create_model_as(relation, sql) %}
     {%- set ml_config = config.get('ml_config', {}) -%}
-    {%- set raw_labels = config.get('labels', {}) -%}
     {%- set sql_header = config.get('sql_header', none) -%}
     
     {%- set target_variable = ml_config.get('target_variable', none) -%}
@@ -22,7 +21,7 @@
 
     commit; 
 
-    drop model if exists {{ relation }};
+    drop model if exists {{ prediction_function_name }};
 
     create model {{ prediction_function_name }}
     from ( {{ sql }} )
@@ -42,8 +41,7 @@
 {% endmacro %}
 
 {% materialization model, adapter='redshift' -%}
-    {%- set identifier = model['alias'] -%}
-    {%- set old_relation = adapter.get_relation(database=database, schema=schema, identifier=identifier) -%}    
+    {%- set identifier = model['alias'] -%}   
     {%- set target_relation = api.Relation.create(database=database, schema=schema, identifier=identifier) -%}
 
     {{ run_hooks(pre_hooks) }}
@@ -54,5 +52,5 @@
 
     {{ run_hooks(post_hooks) }}
 
-    {{ return({'relations': [target_relation]}) }}
+    {{ return( {'relations': [target_relation.identifier]} ) }}
 {% endmaterialization %}
