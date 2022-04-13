@@ -1,0 +1,43 @@
+version: 2
+
+sources:
+  - name: raw
+    database: dev
+    schema: dbt_ml_workflow_data
+    loader: s3
+    tables:
+      - name: external_claims
+        external:
+          location: "s3://dbt-ml-workflow--data-bucket/data/claims"        # amazon s3 path prefix
+          row_format: serde 'org.apache.hadoop.hive.serde2.OpenCSVSerde'
+          table_properties: "('skip.header.line.count'='1')"
+        columns:
+          - name: policy_id
+            tests:
+              - unique
+              - not_null
+      
+      - name: external_customers
+        external:
+          location: "s3://dbt-ml-workflow--data-bucket/data/customers"        # amazon s3 path prefix
+          row_format: serde 'org.apache.hadoop.hive.serde2.OpenCSVSerde'
+          table_properties: "('skip.header.line.count'='1')"
+        columns: 
+          - name: policy_id
+            tests:
+              - unique
+              - not_null
+              - relationships:
+                  to: source('raw', 'external_claims')
+                  field: policy_id
+      
+      - name: external_claims_customer
+        external:
+          location: "s3://dbt-ml-workflow--data-bucket/data/claims_customer"        # amazon s3 path prefix
+          row_format: serde 'org.apache.hadoop.hive.serde2.OpenCSVSerde'
+          table_properties: "('skip.header.line.count'='1')"
+        columns: 
+          - name: policy_id
+            tests:
+              - unique
+              - not_null

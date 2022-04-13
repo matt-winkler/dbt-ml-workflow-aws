@@ -1,0 +1,9 @@
+packages:
+  - package: dbt-labs/codegen
+    version: 0.6.0
+  - package: omnata-labs/dbt_ml_preprocessing
+    version: [">=1.0.2"]
+  - package: dbt-labs/dbt_utils
+    version: 0.8.4
+  - package: calogica/dbt_date
+    version: [">=0.5.0", "<0.6.0"]
