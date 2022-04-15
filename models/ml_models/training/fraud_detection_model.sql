@@ -1,7 +1,8 @@
 {{
     config(
-        materialized='model',
+        materialized='machine_learning_model',
         ml_config={
+            'drop_existing_model': 'True',
             'target_variable': 'fraud',
             'prediction_function_name': 'fraud_detection_model',
             'iam_role': 'arn:aws:iam::486758181003:role/dbt-ml-workflow--redshift-model-manager-role',
@@ -12,7 +13,12 @@
             'problem_type': 'binary_classification',
             'objective': 'binary:hinge',
             'preprocessors': 'none',
-            'hyperparameters': 'default'
+            'hyperparameters': "DEFAULT EXCEPT (
+                    eval_metric 'auc',
+                    max_depth '5',
+                    num_round '250',
+                    scale_pos_weight '75'
+                )"
         }
     )
 }}
@@ -24,3 +30,4 @@ select {{
         ) 
     }} 
 from {{ ref('dataset') }} 
+where policy_id <= 4000
