@@ -15,9 +15,9 @@
             'preprocessors': 'none',
             'hyperparameters': "DEFAULT EXCEPT (
                     eval_metric 'auc',
-                    max_depth '5',
+                    max_depth '3',
                     num_round '250',
-                    scale_pos_weight '75'
+                    scale_pos_weight '5'
                 )"
         }
     )
