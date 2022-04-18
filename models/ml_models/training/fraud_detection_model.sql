@@ -11,13 +11,13 @@
             'auto_ml': 'OFF',
             'model_type': 'XGBOOST',
             'problem_type': 'binary_classification',
-            'objective': 'binary:hinge',
+            'objective': 'binary:logistic',
             'preprocessors': 'none',
             'hyperparameters': "DEFAULT EXCEPT (
                     eval_metric 'aucpr',
                     max_depth '3',
                     num_round '250',
-                    scale_pos_weight '5'
+                    scale_pos_weight '10'
                 )"
         }
     )

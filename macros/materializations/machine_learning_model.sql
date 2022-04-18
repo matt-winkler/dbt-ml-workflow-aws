@@ -25,7 +25,7 @@
          -- close any open transactions first
          commit;
          {% do log('dropping existing model', info=true) %}
-         drop model if exists {{target.database}}.{{target.schema}}.{{ prediction_function_name }};
+         drop model if exists {{ target.database }}.{{ target.schema }}.{{ prediction_function_name }};
          {% do log('successfully dropped existing model', info=true) %}
          commit;
       {% endset %}

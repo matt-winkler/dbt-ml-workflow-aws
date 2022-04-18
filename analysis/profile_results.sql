@@ -1,4 +1,4 @@
-{% set cut_point = -1 %}
+{% set cut_point = -2 %}
 
 with result_data as (
     select * from {{ ref('fraud_detection_results')}}

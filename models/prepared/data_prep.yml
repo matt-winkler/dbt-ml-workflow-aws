@@ -1,0 +1,9 @@
+version: 2
+
+models:
+  - name: dataset
+    columns:
+      - name: policy_id
+        tests:
+          - unique
+          - not_null
